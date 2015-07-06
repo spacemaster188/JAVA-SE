@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="1.7.0_45" class="java.beans.XMLDecoder">
+ <object class="com.jformdesigner.model.FormModel">
+  <void property="contentType">
+   <string>form/swing</string>
+  </void>
+  <void property="root">
+   <object class="com.jformdesigner.model.FormRoot">
+    <void method="add">
+     <object class="com.jformdesigner.model.FormWindow">
+      <string>javax.swing.JFrame</string>
+      <object class="com.jformdesigner.model.FormLayoutManager">
+       <class>org.jdesktop.layout.GroupLayout</class>
+       <void method="setProperty">
+        <string>$horizontalGroup</string>
+        <string>par l {seq {par l {seq {space :::p, par l {seq l {comp label4:::p:118:p, space :6:6:6, comp label5:::p:132:p, space :27:27:27, comp label6:::p::p}, comp textArea2:::p:377:p, comp separator2:::p:377:p}}, seq l {space :p:134:p, comp button2:::p:124:p}}, space :::x}}</string>
+       </void>
+       <void method="setProperty">
+        <string>$verticalGroup</string>
+        <string>par l {seq t {space ::26:x, par l {seq l {space :19:19:19, comp label4:::p:49:p}, comp label5:::p:79:p, comp label6:::p:79:p}, space :7:7:7, comp textArea2:::p:103:p, space :6:6:6, comp separator2:::p::p, space :::p, comp button2:::p:33:p, space :::p}}</string>
+       </void>
+      </object>
+      <void method="setProperty">
+       <string>title</string>
+       <string>     Elevator Control Panel</string>
+      </void>
+      <void method="add">
+       <object class="com.jformdesigner.model.FormComponent">
+        <string>javax.swing.JButton</string>
+        <void method="setProperty">
+         <string>text</string>
+         <string>START</string>
+        </void>
+        <void method="setProperty">
+         <string>font</string>
+         <object class="java.awt.Font">
+          <string>Tahoma</string>
+          <int>1</int>
+          <int>22</int>
+         </object>
+        </void>
+        <void method="setProperty">
+         <string>foreground</string>
+         <object class="java.awt.Color" field="darkGray"/>
+        </void>
+        <void property="name">
+         <string>button2</string>
+        </void>
+        <void method="addEvent">
+         <object class="com.jformdesigner.model.FormEvent">
+          <string>java.awt.event.ActionListener</string>
+          <string>actionPerformed</string>
+          <string>button1ActionPerformed</string>
+          <boolean>true</boolean>
+         </object>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.jformdesigner.model.FormComponent">
+        <string>javax.swing.JTextArea</string>
+        <void property="name">
+         <string>textArea2</string>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.jformdesigner.model.FormComponent">
+        <string>javax.swing.JSeparator</string>
+        <void property="name">
+         <string>separator2</string>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.jformdesigner.model.FormComponent">
+        <string>javax.swing.JLabel</string>
+        <void method="setProperty">
+         <string>text</string>
+         <string>FLOOR</string>
+        </void>
+        <void method="setProperty">
+         <string>font</string>
+         <object class="java.awt.Font">
+          <string>Tahoma</string>
+          <int>1</int>
+          <int>28</int>
+         </object>
+        </void>
+        <void method="setProperty">
+         <string>foreground</string>
+         <object class="java.awt.Color" field="darkGray"/>
+        </void>
+        <void property="name">
+         <string>label4</string>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.jformdesigner.model.FormComponent">
+        <string>javax.swing.JLabel</string>
+        <void method="setProperty">
+         <string>text</string>
+         <string>1</string>
+        </void>
+        <void method="setProperty">
+         <string>font</string>
+         <object class="java.awt.Font">
+          <string>Square721 BT</string>
+          <int>1</int>
+          <int>88</int>
+         </object>
+        </void>
+        <void property="name">
+         <string>label5</string>
+        </void>
+        <void method="addEvent">
+         <object class="com.jformdesigner.model.FormEvent">
+          <string>java.beans.PropertyChangeListener</string>
+          <string>propertyChange</string>
+          <string>label5PropertyChange</string>
+          <boolean>true</boolean>
+         </object>
+        </void>
+       </object>
+      </void>
+      <void method="add">
+       <object class="com.jformdesigner.model.FormComponent">
+        <string>javax.swing.JLabel</string>
+        <void method="setProperty">
+         <string>text</string>
+         <string>DOWN</string>
+        </void>
+        <void method="setProperty">
+         <string>font</string>
+         <object class="java.awt.Font">
+          <string>Tahoma</string>
+          <int>1</int>
+          <int>28</int>
+         </object>
+        </void>
+        <void property="name">
+         <string>label6</string>
+        </void>
+       </object>
+      </void>
+      <void property="name">
+       <string>this</string>
+      </void>
+     </object>
+     <object class="com.jformdesigner.model.FormLayoutConstraints">
+      <null/>
+      <void method="setProperty">
+       <string>location</string>
+       <object class="java.awt.Point" id="Point0">
+        <void class="java.awt.Point" method="getField">
+         <string>x</string>
+         <void method="set">
+          <object idref="Point0"/>
+          <int>410</int>
+         </void>
+        </void>
+        <void class="java.awt.Point" method="getField">
+         <string>y</string>
+         <void method="set">
+          <object idref="Point0"/>
+          <int>140</int>
+         </void>
+        </void>
+       </object>
+      </void>
+      <void method="setProperty">
+       <string>size</string>
+       <object class="java.awt.Dimension" id="Dimension0">
+        <void class="java.awt.Dimension" method="getField">
+         <string>width</string>
+         <void method="set">
+          <object idref="Dimension0"/>
+          <int>405</int>
+         </void>
+        </void>
+        <void class="java.awt.Dimension" method="getField">
+         <string>height</string>
+         <void method="set">
+          <object idref="Dimension0"/>
+          <int>300</int>
+         </void>
+        </void>
+       </object>
+      </void>
+     </object>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>
