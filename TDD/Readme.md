@@ -36,7 +36,7 @@ STARTING_TRANSPORTATION the start of the transportation process
 COMPLETION_TRANSPORTATION the completion of the transportation process 
 ABORTING_TRANSPORTATION interruption of the transportation process
 MOVING_ELEVATOR (from story-story N to-M) the movement of the Elevator from floor to floor 
-BOADING_OF_PASSENGER ( passangerID on story-N) boarding on the floor
-DEBOADING_OF_PASSENGER ( passangerID on story-N) disembark the passenger at the floor
+BOARDING_OF_PASSENGER ( passangerID on story-N) boarding on the floor
+DEBOARDING_OF_PASSENGER ( passangerID on story-N) disembark the passenger at the floor
 
 If in config file animationBoost=0, then the process of transportation is only displayed by outputting to the console
