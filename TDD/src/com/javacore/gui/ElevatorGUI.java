@@ -152,7 +152,7 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
         currFloor = elevatorContr.getCurrentFloor();
 		currWay = elevatorContr.getCurrWay();
 		textArea2.setText(GlobalLog.getLog());
-		textArea2.paintImmediately(textArea2.getVisibleRect());
+		//textArea2.paintImmediately(textArea2.getVisibleRect());
 		if(elevatorContr.isComplete()){
 			isComplete = elevatorContr.isComplete();
 			button2.setText(Constants.VIEW_LOG);
@@ -165,10 +165,12 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
 		label5.paintImmediately(label5.getVisibleRect());
 		if(currWay.equals(currentWay.UP)){
 			label6.setText(Constants.UP);
+			label6.paintImmediately(label6.getVisibleRect());
 		}else{
 			label6.setText(Constants.DOWN);
+			label6.paintImmediately(label6.getVisibleRect());
 		}
-		label6.paintImmediately(label6.getVisibleRect());
+		
 	}
 	
 }
