@@ -9,6 +9,7 @@ import javax.swing.*;
 import com.javacore.controllers.ElevatorController;
 import com.javacore.interfaces.ElevatorObserver;
 import com.javacore.utils.Constants;
+import com.javacore.utils.GlobalLog;
 import com.javacore.utils.currentWay;
 
 public class ElevatorGUI extends JFrame implements ElevatorObserver {
@@ -64,6 +65,8 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
 	private void initComponents() throws InterruptedException {
 		button2 = new JButton();
 		textArea2 = new JTextArea();
+		JScrollPane scroll = new JScrollPane (textArea2);
+		scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		separator2 = new JSeparator();
 		label4 = new JLabel();
 		label5 = new JLabel();
@@ -111,7 +114,7 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
 									.addComponent(label5, GroupLayout.PREFERRED_SIZE, 132, GroupLayout.PREFERRED_SIZE)
 									.addGap(11, 11, 11)
 									.addComponent(label6, GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
-								.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
+								.addComponent(scroll, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)
 								.addComponent(separator2, GroupLayout.PREFERRED_SIZE, 377, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(contentPaneLayout.createSequentialGroup()
 							.addGap(76, 76, 76)
@@ -129,7 +132,7 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
 						.addComponent(label5, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
 						.addComponent(label6, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
 					.addGap(7, 7, 7)
-					.addComponent(textArea2, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scroll, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
 					.addGap(6, 6, 6)
 					.addComponent(separator2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
@@ -148,6 +151,8 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
 	public void update() {
         currFloor = elevatorContr.getCurrentFloor();
 		currWay = elevatorContr.getCurrWay();
+		textArea2.setText(GlobalLog.getLog());
+		textArea2.paintImmediately(textArea2.getVisibleRect());
 		if(elevatorContr.isComplete()){
 			isComplete = elevatorContr.isComplete();
 			button2.setText(Constants.VIEW_LOG);

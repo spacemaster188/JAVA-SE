@@ -8,6 +8,8 @@ import com.javacore.gui.ElevatorGUI;
 import com.javacore.interfaces.ElevatorObserver;
 import com.javacore.interfaces.ElevatorSubject;
 import com.javacore.utils.Constants;
+import com.javacore.utils.GlobalLog;
+import com.javacore.utils.LoggingConstants;
 import com.javacore.utils.Properties;
 import com.javacore.utils.currentWay;
 
@@ -54,7 +56,7 @@ public void start() throws InterruptedException{
 }
 public void runElevator() throws InterruptedException{
 	int currentLength = 0;
-	logger.info(Constants.STARTING_TRANSPORTATION);
+	logger.info(LoggingConstants.STARTING_TRANSPORTATION.getConstant());
 	while(!isTerminate){
 		/** Check for boarding and deborning passengers */
 		if(currentLength == 0) {
@@ -62,13 +64,14 @@ public void runElevator() throws InterruptedException{
 			notifyIncomingPassengers();
 			/** Get conditions for elevator stopping  */
 			if(passengersController.hasNoTransportationTasks()){
-				logger.info(Constants.COMPLETION_TRANSPORTATION);
+				logger.info(LoggingConstants.COMPLETION_TRANSPORTATION);
 				isComplete = true;
 				notifyObservers();
 				passengersController.isConditionsStoppingElevatoraVerified();
+				notifyObservers();
 				break;
 			}else{
-				logger.info(Constants.MOVING_ELEVATOR + currentFloor + Constants.TO_FLOOR + getDestinationFloor() + Constants.CLOSE_STR);
+				logger.info(GlobalLog.addLog(Constants.MOVING_ELEVATOR + currentFloor + Constants.TO_FLOOR + getDestinationFloor() + Constants.CLOSE_STR));
 			}
 		}
 		currentLength += speedPerSec;
@@ -95,10 +98,10 @@ public void runElevator() throws InterruptedException{
 		Thread.currentThread().sleep(moveDelay);
 	}
 	if(isTerminate){
-		logger.info(Constants.ABORTING_TRANSPORTATION);
+		logger.info(LoggingConstants.ABORTING_TRANSPORTATION.getConstant());
 		terminateElevatorProcess();
 		notifyObservers();
-		logger.info(Constants.INTERRUPTED_STATE);
+		logger.info(LoggingConstants.INTERRUPTED_STATE.getConstant());
 	}
 }
 

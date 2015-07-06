@@ -11,6 +11,8 @@ import com.javacore.entities.Passenger;
 import com.javacore.interfaces.TransportationTaskObserver;
 import com.javacore.interfaces.TransportationTaskSubject;
 import com.javacore.utils.Constants;
+import com.javacore.utils.GlobalLog;
+import com.javacore.utils.LoggingConstants;
 import com.javacore.utils.PassengerConditions;
 import com.javacore.utils.Properties;
 import com.javacore.utils.currentWay;
@@ -125,10 +127,10 @@ public class PassengerController implements TransportationTaskSubject{
 	/**  Verify conditions for elevator stopping  */
 	public void isConditionsStoppingElevatoraVerified() {
 		if(isAllPassengersArrived() && isAllDispatchStoryContainersEmpty() && isElevatorContainersEmpty() && isArrivedPassengersVerified()){
-			logger.info(Constants.PROCESS_VALIDATION_OK);
+			logger.info(LoggingConstants.PROCESS_VALIDATION_OK.getConstant());
 		}
 		else{
-			logger.info(Constants.PROCESS_VALIDATION_FAIL);
+			logger.info(LoggingConstants.PROCESS_VALIDATION_FAIL.getConstant());
 		}
 	}
 	
@@ -138,10 +140,10 @@ public class PassengerController implements TransportationTaskSubject{
 			arrivedPassengersCount += arrivalStoryContainer.getPassengerLst().size();
 		}
 		if(passengerCount == arrivedPassengersCount){
-			logger.info(Constants.ALL_PASSENGERS_ARRIVED);
+			logger.info(LoggingConstants.ALL_PASSENGERS_ARRIVED.getConstant());
 			return true;
 		}
-		logger.info(Constants.ALL_PASSENGERS_NOT_ARRIVED);
+		logger.info(LoggingConstants.ALL_PASSENGERS_NOT_ARRIVED.getConstant());
 		return false;
 	}
 	
@@ -151,19 +153,19 @@ public class PassengerController implements TransportationTaskSubject{
 			dispatchStorPassengersCount += containerElement.getPassengerLst().size();
 		}
 		if(dispatchStorPassengersCount == 0){
-			logger.info(Constants.DISPATCH_CONTAINERS_EMPTY);
+			logger.info(LoggingConstants.DISPATCH_CONTAINERS_EMPTY.getConstant());
 			return true;
 		}
-		logger.info(Constants.DISPATCH_CONTAINERS_NOT_EMPTY);
+		logger.info(LoggingConstants.DISPATCH_CONTAINERS_NOT_EMPTY.getConstant());
 		return false;
 	}
 	
 	public boolean isElevatorContainersEmpty() {
 		if(elevatorCont.getPassengerLst().size() == 0){
-			logger.info(Constants.ELEVATOR_CONTAINER_EMPTY);
+			logger.info(LoggingConstants.ELEVATOR_CONTAINER_EMPTY.getConstant());
 			return true;
 		}
-		logger.info(Constants.ELEVATOR_CONTAINER_NOT_EMPTY);
+		logger.info(LoggingConstants.ELEVATOR_CONTAINER_NOT_EMPTY.getConstant());
 		return false;
 	}
 	
@@ -178,10 +180,10 @@ public class PassengerController implements TransportationTaskSubject{
 			}
 		}
 		if(verified){
-			logger.info(Constants.ARRIVED_PASSENGERS_PASS);
+			logger.info(LoggingConstants.ARRIVED_PASSENGERS_PASS.getConstant());
 			return true;
 		}
-		logger.info(Constants.ARRIVED_PASSENGERS_FAIL);
+		logger.info(LoggingConstants.ARRIVED_PASSENGERS_FAIL.getConstant());
 		return false;
 	}
 	
@@ -215,7 +217,7 @@ public class PassengerController implements TransportationTaskSubject{
 	public void getOutPassenger(Passenger passenger, int currentFloor){
 		ArrivalStoryContainer arrivalContainer = getArrivalStoryContainerByFloor(passenger.getEndFloor());
 		if(arrivalContainer != null){
-			logger.info(Constants.DEBOARDING + passenger.getPassengerID() + Constants.ON_STORY + currentFloor);
+			logger.info(GlobalLog.addLog(Constants.DEBOARDING + passenger.getPassengerID() + Constants.ON_STORY + currentFloor));
 			arrivalContainer.addPassenger(passenger);
 			notifyObservers(passenger);
 			removeTransportationTaskByPassenger(passenger);
@@ -226,7 +228,7 @@ public class PassengerController implements TransportationTaskSubject{
 	public void getPassengerToElevator(Passenger passenger, int currentFloor){
 		if(elevatorCont.isElevatorVacant()){
 			elevatorCont.addPassenger(passenger);
-			logger.info(Constants.BOARDING + passenger.getPassengerID() + Constants.ON_STORY + currentFloor);
+			logger.info(GlobalLog.addLog(Constants.BOARDING + passenger.getPassengerID() + Constants.ON_STORY + currentFloor));
 		}
 	}
 	

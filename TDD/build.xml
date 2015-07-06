@@ -15,6 +15,7 @@
         <pathelement location="lib/jgoodies-common.jar"/>
         <pathelement location="lib/swing-layout.jar"/>
         <pathelement location="lib/log4j-1.2.17.jar"/>
+        <pathelement location="lib/beansbinding.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
