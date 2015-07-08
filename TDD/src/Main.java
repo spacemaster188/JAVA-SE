@@ -9,10 +9,9 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 	  /** Get main properties and organize passengers  */
-      new Properties();
-      PassengerController passControl = new PassengerController();
-      passControl.organizePassengers();
-      passControl.createTransportationTasks();
-      new ElevatorController(passControl).start();
+         		  new Properties();
+         	      PassengerController passControl = new PassengerController();
+         	      passControl.organizePassengers();
+         	      new ElevatorController(passControl).start();
 	}
 }

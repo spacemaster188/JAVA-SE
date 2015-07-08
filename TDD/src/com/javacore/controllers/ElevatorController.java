@@ -60,8 +60,11 @@ public void runElevator() throws InterruptedException{
 	while(!isTerminate){
 		/** Check for boarding and deborning passengers */
 		if(currentLength == 0) {
-			notifyElevatorPassengers();
-			notifyIncomingPassengers();
+			System.out.println("ELEVATOR CAME ON FLOOR: " + currentFloor);
+			notifyElevatorPassengersGetOut();
+			getOutPassengers();
+			notifyPassengersToEnterElevator();
+			takeOnboardPassengers();
 			/** Get conditions for elevator stopping  */
 			if(passengersController.hasNoTransportationTasks()){
 				logger.info(LoggingConstants.COMPLETION_TRANSPORTATION);
@@ -95,7 +98,8 @@ public void runElevator() throws InterruptedException{
 			currWay = currentWay.UP;
 			notifyObservers();
 		}
-		Thread.currentThread().sleep(moveDelay);
+		Thread.currentThread();
+		Thread.sleep(moveDelay);
 	}
 	if(isTerminate){
 		logger.info(LoggingConstants.ABORTING_TRANSPORTATION.getConstant());
@@ -118,12 +122,20 @@ private int getDestinationFloor(){
 	return currentFloor - 1;
 }
 
-private void notifyElevatorPassengers(){
-	passengersController.notifyElevatorPassengers(currentFloor);
+private void notifyElevatorPassengersGetOut(){
+	passengersController.notifyElevatorPassengersGetOut(currentFloor, currWay);
 }
 
-private void notifyIncomingPassengers(){
-	passengersController.notifyIncomingPassengers(currentFloor, currWay);
+private void notifyPassengersToEnterElevator(){
+	passengersController.notifyIncomingPassengersToEnter(currentFloor, currWay);
+}
+
+private void getOutPassengers(){
+	passengersController.getOutPassengers(currentFloor);
+}
+
+private void takeOnboardPassengers(){
+	passengersController.takeOnboardPassengers(currentFloor);
 }
 
 private void terminateElevatorProcess(){

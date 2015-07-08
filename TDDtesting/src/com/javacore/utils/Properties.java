@@ -3,16 +3,16 @@ package com.javacore.utils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-/** Read configuration variables from file */
+
 public class Properties {
 private static int floorNumber;
 private static int elevatorCapacity;
 private static int passengerCount;
 private static int animationBoost;
+final static String REGEX = ";";
 
 public Properties() throws IOException {
 	super();
-	getPropertiesFromFile();
 }
 
 public static int getFloorNumber() {
@@ -47,8 +47,8 @@ public static void setAnimationBoost(int animationBoost) {
 	Properties.animationBoost = animationBoost;
 }
 
-private void getPropertiesFromFile() throws IOException{
-	 BufferedReader reader = new BufferedReader(new FileReader(Constants.CONFIG));
+public String getPropertiesFromFile(String config) throws IOException{
+	 BufferedReader reader = new BufferedReader(new FileReader(config));
 	 String line;
 	 while ((line = reader.readLine()) != null) {
 		 if (line.contains(Constants.FLOOR_NUMBER)) {
@@ -65,16 +65,17 @@ private void getPropertiesFromFile() throws IOException{
 		 }
 	 }
 	 reader.close();
+	 return  String.valueOf(floorNumber + REGEX + elevatorCapacity + REGEX + passengerCount + REGEX + animationBoost + REGEX);
 }
 
 private int getValueByKey(String lineStr){
-    String[]tmpMas = lineStr.trim().split(Constants.REGEX);
-    try {
-   	 Integer.parseInt(tmpMas[1].trim());
-	 } catch (Exception e) {
-		return 0;
-	 }
-    return Integer.parseInt(tmpMas[1].trim());
+	     String[]tmpMas = lineStr.trim().split(Constants.REGEX);
+	     try {
+	    	 Integer.parseInt(tmpMas[1].trim());
+		 } catch (Exception e) {
+			return 0;
+		 }
+	     return Integer.parseInt(tmpMas[1].trim());
 }
 
 }

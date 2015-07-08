@@ -3,30 +3,37 @@ package com.javacore.containers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.javacore.entities.Passenger;
+import com.javacore.controllers.TransportationTask;
 import com.javacore.interfaces.Container;
 
 public class ArrivalStoryContainer implements Container {
 	private int floor;
-	private List <Passenger> passengerLst;
+	private List <TransportationTask> transpTaskLst;
 	
 	public ArrivalStoryContainer(int floor) {
 		super();
 		this.floor = floor;
-		passengerLst = new ArrayList<Passenger>();
+		transpTaskLst = new ArrayList<TransportationTask>();
 	}
 	
-	public void addPassenger(Passenger passenger) {
-		passenger.setContainer(this);
-		passengerLst.add(passenger);
-	}
-
 	public int getFloor() {
 		return floor;
 	}
 
-	public List<Passenger> getPassengerLst() {
-		return passengerLst;
+	@Override
+	public void addTransportationTask(TransportationTask transportationTask) {
+		transpTaskLst.add(transportationTask);
+		
+	}
+
+	@Override
+	public List<TransportationTask> getTransportationTaskLst() {
+		return transpTaskLst;
+	}
+
+	@Override
+	public void removeTransportationTask(TransportationTask transportationTask) {
+		transpTaskLst.remove(transportationTask);
 	}
 	
 }

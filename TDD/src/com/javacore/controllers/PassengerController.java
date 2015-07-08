@@ -8,8 +8,6 @@ import com.javacore.containers.ArrivalStoryContainer;
 import com.javacore.containers.DispatchStoryContainer;
 import com.javacore.containers.ElevatorContainer;
 import com.javacore.entities.Passenger;
-import com.javacore.interfaces.TransportationTaskObserver;
-import com.javacore.interfaces.TransportationTaskSubject;
 import com.javacore.utils.Constants;
 import com.javacore.utils.GlobalLog;
 import com.javacore.utils.LoggingConstants;
@@ -17,75 +15,38 @@ import com.javacore.utils.PassengerConditions;
 import com.javacore.utils.Properties;
 import com.javacore.utils.currentWay;
 
-public class PassengerController implements TransportationTaskSubject{
-	private ArrayList<TransportationTaskObserver> observers;
+public class PassengerController {
+	public volatile boolean isWaiting = false;;
 	private int floorNumber;
 	private int passengerCount;
-    private List <DispatchStoryContainer> dispStorCont;
-    private List <ArrivalStoryContainer> arrivStorCont;
-    private List <TransportationTask> transpTaskList;
-    private List <Passenger> passengerList;
+    private List <DispatchStoryContainer> dispStorContLst;
+    private List <ArrivalStoryContainer> arrivStorContLst;
     private ElevatorContainer elevatorCont;
     final static Logger logger = Logger.getLogger("ElevatorController.class");
     
 	public PassengerController() {
 		super();
-		observers = new ArrayList<TransportationTaskObserver>();
 		this.floorNumber = Properties.getFloorNumber();
 		this.passengerCount = Properties.getPassengerCount();
-		this.passengerList = new ArrayList<Passenger>();
-		this.dispStorCont = new ArrayList<DispatchStoryContainer>();
-		this.arrivStorCont = new ArrayList<ArrivalStoryContainer>();
-		this.transpTaskList = new ArrayList<TransportationTask>();
+		this.dispStorContLst = new ArrayList<DispatchStoryContainer>();
+		this.arrivStorContLst = new ArrayList<ArrivalStoryContainer>();
 		this.elevatorCont = new ElevatorContainer(Properties.getElevatorCapacity());
 	}
 	
 	public void organizePassengers(){
 		int tmpFloorNumber = Properties.getFloorNumber();
 		for(int i = 1; i <= tmpFloorNumber; i++){
-			dispStorCont.add(new DispatchStoryContainer(i));      //build DispatchStoryContainer list
-			arrivStorCont.add(new ArrivalStoryContainer(i));      //build ArrivalStoryContainer list
+			dispStorContLst.add(new DispatchStoryContainer(i));      //build DispatchStoryContainer list
+			arrivStorContLst.add(new ArrivalStoryContainer(i));      //build ArrivalStoryContainer list
 		}
-		for(int i = 0; i < passengerCount;i++){                   //build passenger list
-			passengerList.add(new Passenger(floorNumber));
-		}
-		for (Passenger passenger : passengerList) {               //fill DispatchStoryContainers by passengers
-			sortPassengersByStoryContainer(passenger);
-		}
-	}
-	
-	public void createTransportationTasks(){
-		for (Passenger passenger : passengerList) {
-			TransportationTask tt = new TransportationTask(passenger);
-			register(tt);
-			transpTaskList.add(tt);
-		}
-	}
-	
-	public TransportationTask getTransportationTaskByPassenger(Passenger passenger){
-		for (TransportationTask transpTaskElement : transpTaskList) {
-			if(passenger.equals(transpTaskElement.getPassenger())){
-               return transpTaskElement;
-			}
-		}
-		return null;
-	}
-	
-	public void removeTransportationTaskByPassenger(Passenger passenger){
-		if(transpTaskList.size() != 0){
-			for (int i = 0; i < transpTaskList.size(); i++) {
-				if(passenger.equals(transpTaskList.get(i).getPassenger())){
-					transpTaskList.remove(i);
-					break;
+		for(int i = 0; i < passengerCount;i++){                      //build TransportatinTasks list
+			TransportationTask tt = new TransportationTask(new Passenger(floorNumber), this);
+			for (DispatchStoryContainer dispatchStroryContainer : dispStorContLst) {
+				if(dispatchStroryContainer.getFloor() == tt.getStartFloor()){
+					tt.setContainer(dispatchStroryContainer);
+					dispatchStroryContainer.addTransportationTask(tt);
+					tt.startThread();
 				}
-			}
-		}
-	}
-	
-	public void sortPassengersByStoryContainer(Passenger passenger){
-		for (DispatchStoryContainer listElement : dispStorCont) {
-			if(passenger.getStartFloor() == listElement.getFloor()){
-				listElement.addPassenger(passenger);
 			}
 		}
 	}
@@ -95,11 +56,11 @@ public class PassengerController implements TransportationTaskSubject{
 	}
 	
 	public List<DispatchStoryContainer> getDispStorCont() {
-		return dispStorCont;
+		return dispStorContLst;
 	}
 
 	public DispatchStoryContainer getDispatchStoryContainerByFloor(int floor) {
-		for (DispatchStoryContainer dispatchStoryContainer : dispStorCont) {
+		for (DispatchStoryContainer dispatchStoryContainer : dispStorContLst) {
 			if(dispatchStoryContainer.getFloor() == floor){
 				return dispatchStoryContainer;
 			}
@@ -108,7 +69,7 @@ public class PassengerController implements TransportationTaskSubject{
 	}
 
 	public ArrivalStoryContainer getArrivalStoryContainerByFloor(int floor) {
-		for (ArrivalStoryContainer arrivalStoryContainer : arrivStorCont) {
+		for (ArrivalStoryContainer arrivalStoryContainer : arrivStorContLst) {
 			if(arrivalStoryContainer.getFloor() == floor){
 				return arrivalStoryContainer;
 			}
@@ -118,10 +79,16 @@ public class PassengerController implements TransportationTaskSubject{
 	
 	
 	public boolean hasNoTransportationTasks() {
-		if(transpTaskList.size() == 0){
-			return true;
+		boolean isNoTransportationTasks = true;
+		for (DispatchStoryContainer cont : dispStorContLst) {
+			if(cont.getTransportationTaskLst().size() > 0){
+				isNoTransportationTasks = false;
+			}
 		}
-		return false;
+		if(elevatorCont.getTransportationTaskLst().size() > 0){
+			isNoTransportationTasks = false;
+		}
+		return isNoTransportationTasks;
 	}
 	
 	/**  Verify conditions for elevator stopping  */
@@ -136,8 +103,8 @@ public class PassengerController implements TransportationTaskSubject{
 	
 	public boolean isAllPassengersArrived() {
 		int arrivedPassengersCount = 0;
-		for (ArrivalStoryContainer arrivalStoryContainer : arrivStorCont) {
-			arrivedPassengersCount += arrivalStoryContainer.getPassengerLst().size();
+		for (ArrivalStoryContainer arrivalStoryContainer : arrivStorContLst) {
+			arrivedPassengersCount += arrivalStoryContainer.getTransportationTaskLst().size();
 		}
 		if(passengerCount == arrivedPassengersCount){
 			logger.info(LoggingConstants.ALL_PASSENGERS_ARRIVED.getConstant());
@@ -149,8 +116,8 @@ public class PassengerController implements TransportationTaskSubject{
 	
 	public boolean isAllDispatchStoryContainersEmpty() {
 		int dispatchStorPassengersCount = 0;
-		for (DispatchStoryContainer containerElement : dispStorCont) {
-			dispatchStorPassengersCount += containerElement.getPassengerLst().size();
+		for (DispatchStoryContainer containerElement : dispStorContLst) {
+			dispatchStorPassengersCount += containerElement.getTransportationTaskLst().size();
 		}
 		if(dispatchStorPassengersCount == 0){
 			logger.info(LoggingConstants.DISPATCH_CONTAINERS_EMPTY.getConstant());
@@ -161,7 +128,7 @@ public class PassengerController implements TransportationTaskSubject{
 	}
 	
 	public boolean isElevatorContainersEmpty() {
-		if(elevatorCont.getPassengerLst().size() == 0){
+		if(elevatorCont.getTransportationTaskLst().size() == 0){
 			logger.info(LoggingConstants.ELEVATOR_CONTAINER_EMPTY.getConstant());
 			return true;
 		}
@@ -171,10 +138,10 @@ public class PassengerController implements TransportationTaskSubject{
 	
 	public boolean isArrivedPassengersVerified() {
 		boolean verified = true;
-		for (ArrivalStoryContainer containerElement : arrivStorCont) {
-			List <Passenger> passLst = containerElement.getPassengerLst();
-			for (Passenger passenger : passLst) {
-				if(!passenger.getTransportationState().equals(PassengerConditions.COMPLETED) || !(passenger.getEndFloor() == containerElement.getFloor())){
+		for (ArrivalStoryContainer containerElement : arrivStorContLst) {
+			List <TransportationTask> transpTaskLst = containerElement.getTransportationTaskLst();
+			for (TransportationTask tt : transpTaskLst) {
+				if(!tt.getTransportationState().equals(PassengerConditions.COMPLETED) || !(tt.getEndFloor() == containerElement.getFloor())){
 					verified = false;
 				}
 			}
@@ -188,80 +155,106 @@ public class PassengerController implements TransportationTaskSubject{
 	}
 	
 	public void terminateTransportationTasks() {
-		for (TransportationTask transpTaskElement : transpTaskList) {
-			transpTaskElement.setAborted();
+		for (DispatchStoryContainer cont : dispStorContLst) {
+			List<TransportationTask> lst = cont.getTransportationTaskLst();
+			for (TransportationTask transportationTask : lst) {
+				transportationTask.setAborted();
+				proceedAnotherThread(transportationTask);
+			}
 		}
-		notifyObservers();
-		for (int i = transpTaskList.size() - 1; i >= 0; i--) {
-			transpTaskList.remove(i);
-		}
-	}
-	
-	public void notifyElevatorPassengers(int currentFloor){
-		List<Passenger> passengerGetOutLst = elevatorCont.notifyPassengers(currentFloor);
-		for (Passenger passenger : passengerGetOutLst) {
-			getOutPassenger(passenger, currentFloor);
+		List<TransportationTask> elevatorLst = elevatorCont.getTransportationTaskLst();
+		for (TransportationTask transportationTask : elevatorLst) {
+			transportationTask.setAborted();
+			proceedAnotherThread(transportationTask);
 		}
 	}
 	
-	public void notifyIncomingPassengers(int currentFloor, Enum<currentWay> currWay){
-		DispatchStoryContainer dispStorContainer = getDispatchStoryContainerByFloor(currentFloor);
-		if(dispStorContainer != null){
-			List<Passenger> passengerIncomingLst = dispStorContainer.notifyPassengers(currWay);
-			for (Passenger passenger : passengerIncomingLst) {
-				getPassengerToElevator(passenger, currentFloor);
+	public void notifyElevatorPassengersGetOut(int currentFloor, Enum<currentWay> currWay){
+		List <TransportationTask> transpTaskLst = elevatorCont.getTransportationTaskLst();
+		for (TransportationTask transportationTask : transpTaskLst) {
+			transportationTask.setCurrentFloor(currentFloor);
+			transportationTask.setCurrWay(currWay);
+			transportationTask.setGetOut(true);
+			proceedAnotherThread(transportationTask);
+		}
+	}
+	
+	private void proceedAnotherThread(TransportationTask tt){
+		isWaiting = true;
+		tt.notifyTransportationTask();
+		while(isWaiting){
+			//wait
+		}
+	}
+	
+	public void notifyIncomingPassengersToEnter(int currentFloor, Enum<currentWay> currWay){
+		for (DispatchStoryContainer dispatchStoryContainer : dispStorContLst) {
+			if(dispatchStoryContainer.getFloor() == currentFloor){
+				List <TransportationTask> transpTaskLst = dispatchStoryContainer.getTransportationTaskLst();
+				for (TransportationTask transportationTask : transpTaskLst) {
+						transportationTask.setCurrentFloor(currentFloor);
+						transportationTask.setCurrWay(currWay);
+						transportationTask.setEnter(true);
+						proceedAnotherThread(transportationTask);
+				}
+			}	
+		}
+	}
+	
+	public void notifyPassengerController() {
+		isWaiting = false;
+	}
+	
+	public void getOutPassengers(int currentFloor){
+		ArrivalStoryContainer arrCont = getArrivalContainerByFloor(currentFloor);
+		List <TransportationTask> elevatorTtLst = elevatorCont.getTransportationTaskLst();
+		for (int i = elevatorTtLst.size()-1; i >= 0; i--) {
+			if(elevatorTtLst.get(i).getGetOutFloorFlag() != 0){
+				TransportationTask newTt = elevatorTtLst.get(i);
+				elevatorTtLst.remove(i);
+				newTt.setContainer(arrCont);
+				newTt.setGetOutFloorFlag(0);
+                proceedAnotherThread(newTt);
+				arrCont.getTransportationTaskLst().add(newTt);
+				logger.info(GlobalLog.addLog(Constants.DEBOARDING + newTt.getPassenger().getPassengerID() + Constants.ON_STORY + currentFloor ));
+			}
+		}     
+	}
+	
+	public void takeOnboardPassengers(int currentFloor){
+		for (DispatchStoryContainer cont : dispStorContLst) {
+			if(cont.getFloor() == currentFloor){
+				List <TransportationTask> lst = cont.getTransportationTaskLst();
+				for (int i = lst.size()-1; i >= 0; i--) {
+						if(isElevatorVacant() && lst.get(i).getOnboardFloorFlag() != 0){
+							TransportationTask newTt = lst.get(i);
+							lst.remove(i);
+							newTt.setContainer(elevatorCont);
+							newTt.setOnboardFloorFlag(0);
+							elevatorCont.getTransportationTaskLst().add(newTt);
+							logger.info(GlobalLog.addLog(Constants.BOARDING + newTt.getPassenger().getPassengerID() + Constants.ON_STORY + currentFloor));
+					}
+				}
 			}
 		}
 	}
-	
-	public void getOutPassenger(Passenger passenger, int currentFloor){
-		ArrivalStoryContainer arrivalContainer = getArrivalStoryContainerByFloor(passenger.getEndFloor());
-		if(arrivalContainer != null){
-			logger.info(GlobalLog.addLog(Constants.DEBOARDING + passenger.getPassengerID() + Constants.ON_STORY + currentFloor));
-			arrivalContainer.addPassenger(passenger);
-			notifyObservers(passenger);
-			removeTransportationTaskByPassenger(passenger);
-			removeObserverByPassenger(passenger);
-		}
-	}
-	
-	public void getPassengerToElevator(Passenger passenger, int currentFloor){
-		if(elevatorCont.isElevatorVacant()){
-			elevatorCont.addPassenger(passenger);
-			logger.info(GlobalLog.addLog(Constants.BOARDING + passenger.getPassengerID() + Constants.ON_STORY + currentFloor));
-		}
-	}
-	
-	@Override
-	public void register(TransportationTaskObserver newObserver) {
-		observers.add(newObserver);
 		
-	}
-
-	@Override
-	public void removeObserverByPassenger(Passenger passenger){
-		for (int i = observers.size()-1; i >= 0; i--) {
-			TransportationTask tt = (TransportationTask)observers.get(i);
-			if(tt.getPassenger().equals(passenger)){
-				observers.remove(i);
+	
+	
+	public ArrivalStoryContainer getArrivalContainerByFloor(int currentFloor){
+		for (ArrivalStoryContainer arrivalStoryContainer : arrivStorContLst) {
+			if(arrivalStoryContainer.getFloor() == currentFloor){
+				return arrivalStoryContainer;
 			}
 		}
+		return null;
 	}
 	
-	@Override
-	public void notifyObservers(Passenger passenger) {
-		for(TransportationTaskObserver observer : observers){
-			TransportationTask tt = (TransportationTask)observer;
-			if(tt.getPassenger().equals(passenger)){
-				observer.update();
-			}
+	public boolean isElevatorVacant(){
+		if(elevatorCont.getTransportationTaskLst().size() >= elevatorCont.getElevatorCapacity()){
+			return false;
 		}
+		return true;
 	}
-
-	@Override
-	public void notifyObservers() {
-		for(TransportationTaskObserver observer : observers){
-			observer.update();
-		}
-	}
+	
 }

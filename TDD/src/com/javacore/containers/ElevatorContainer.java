@@ -3,45 +3,36 @@ package com.javacore.containers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.javacore.entities.Passenger;
+import com.javacore.controllers.TransportationTask;
 import com.javacore.interfaces.Container;
 
 public class ElevatorContainer implements Container {
 private int elevatorCapacity;
-private List <Passenger> passengerLst;
+private List <TransportationTask> transportationTaskLst;
 
 public ElevatorContainer(int elevatorCapacity) {
 	super();
 	this.elevatorCapacity = elevatorCapacity;
-	this.passengerLst = new ArrayList<Passenger>();
+	this.transportationTaskLst = new ArrayList<TransportationTask>();
 }
 
-public void addPassenger(Passenger passenger) {
-	passengerLst.add(passenger);
+@Override
+public void addTransportationTask(TransportationTask transportationTask) {
+	transportationTaskLst.add(transportationTask);	
 }
 
-public List<Passenger> getPassengerLst() {
-	return passengerLst;
+@Override
+public List<TransportationTask> getTransportationTaskLst() {
+	return transportationTaskLst;
 }
 
-public List<Passenger> notifyPassengers(int currentFloor) {
-	List<Passenger> passengerGetOutLst = new ArrayList<Passenger>();
-	for (Passenger passenger : passengerLst) {
-		if(passenger.isReadyGetOut(currentFloor)){
-       	 passengerGetOutLst.add(passenger);
-		}
-	}
-	for (Passenger passenger : passengerGetOutLst) {
-    	passengerLst.remove(passenger);
-	}
-	return passengerGetOutLst;
+@Override
+public void removeTransportationTask(TransportationTask transportationTask) {
+	transportationTaskLst.remove(transportationTask);
 }
 
-public boolean isElevatorVacant(){
-	if(passengerLst.size() >= elevatorCapacity){
-		return false;
-	}
-	return true;
+public int getElevatorCapacity() {
+	return elevatorCapacity;
 }
 
 }
