@@ -10,9 +10,10 @@ import org.junit.runners.Suite.SuiteClasses;
 		runPassengerControllerTest1.class, runPassengerControllerTest2.class,
 		runPassengerControllerTest3.class, runPassengerControllerTest4.class,
 		runPassengerTest1.class, runPassengerTest2.class,
-		runPropertiesTest1.class, runPropertiesTest2.class,
-		runPropertiesTest3.class, runTransportationTaskTest1.class,
-		runTransportationTaskTest2.class, runTransportationTaskTest3.class })
+		runPassengerTest3.class, runPropertiesTest1.class,
+		runPropertiesTest2.class, runPropertiesTest3.class,
+		runTransportationTaskTest1.class, runTransportationTaskTest2.class,
+		runTransportationTaskTest3.class, runTransportationTaskTest4.class })
 public class AllTests {
 
 }

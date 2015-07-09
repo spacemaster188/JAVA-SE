@@ -38,6 +38,30 @@ public TransportationTask(Passenger passenger) {
 	enter = true;
 }
 
+public boolean checkChangePassengerConditionFromAnotherThread(){
+	ArrivalStoryContainer ar  = new ArrivalStoryContainer(5);
+	container = ar;
+	run();
+	if(passenger.getTransportationState().equals(PassengerConditions.COMPLETED)){
+		return true;
+	}
+	return false;
+}
+
+public void run() {
+	boolean flag = true;
+	while(flag){
+		checkIsEnterNotify();
+        checkIsGetOutNotify();
+		if(checkIsAbortedState()){
+			flag = false;
+		}
+		if(checkIsCompletedState()){
+			flag = false;
+		}
+	}
+}
+
 public Thread getMyThread() {
 	return myThread;
 }

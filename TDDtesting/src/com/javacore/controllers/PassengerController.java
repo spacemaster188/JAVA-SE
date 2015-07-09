@@ -58,7 +58,15 @@ public class PassengerController {
 		logger.info(GlobalLog.addLog("asd"));
 		return GlobalLog.getLog();
 	}
-
+	
+	public int getLastPassengerId() {
+		List <Passenger> lst = new ArrayList<Passenger>();
+		lst.add(new Passenger());
+		lst.add(new Passenger());
+		lst.add(new Passenger());
+		return lst.get(lst.size()-1).getPassengerID() - lst.get(0).getPassengerID();
+	}
+	
 	public ElevatorContainer getElevatorCont() {
 		return elevatorCont;
 	}
