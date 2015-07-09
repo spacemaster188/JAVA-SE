@@ -7,9 +7,11 @@ private int floorNumber;
 private int currentFloor;
 private Enum <currentWay> currWay;
 boolean runFlag;
-boolean isTerminate;                      //terminate flag
+boolean isTerminate;
 private int moveDelay;
 final int DELAY = 1000;
+final int floorLength = 300;
+final int speedPerSec = 100;
 
 public ElevatorController() throws InterruptedException {
 	super();
@@ -22,8 +24,6 @@ public ElevatorController() throws InterruptedException {
 }
 
 public int runElevatorGetFloor() throws InterruptedException{
-	int floorLength = 300;
-	int speedPerSec = 100;
 	int currentLength = 0;
 	System.out.println(Constants.STARTING_TRANSPORTATION);
 	while(runFlag && !isTerminate){
@@ -51,7 +51,8 @@ public int runElevatorGetFloor() throws InterruptedException{
 		if(currentFloor == 1 && currWay.equals(currentWay.DOWN)){
 			currWay = currentWay.UP;
 		}
-		Thread.currentThread().sleep(moveDelay);
+		Thread.currentThread();
+		Thread.sleep(moveDelay);
 	}
 	if(isTerminate){
 		System.out.println(Constants.ABORTING_TRANSPORTATION);
@@ -60,8 +61,6 @@ public int runElevatorGetFloor() throws InterruptedException{
 }
 
 public Enum<currentWay> runElevatorGetWay() throws InterruptedException{
-	int floorLength = 300;
-	int speedPerSec = 100;
 	int currentLength = 0;
 	System.out.println(Constants.STARTING_TRANSPORTATION);
 	while(runFlag && !isTerminate){
@@ -89,7 +88,8 @@ public Enum<currentWay> runElevatorGetWay() throws InterruptedException{
 		if(currentFloor == 1 && currWay.equals(currentWay.DOWN)){
 			currWay = currentWay.UP;
 		}
-		Thread.currentThread().sleep(moveDelay);
+		Thread.currentThread();
+		Thread.sleep(moveDelay);
 	}
 	if(isTerminate){
 		System.out.println(Constants.ABORTING_TRANSPORTATION);
@@ -98,8 +98,6 @@ public Enum<currentWay> runElevatorGetWay() throws InterruptedException{
 }
 
 public int runElevatorFloorCount() throws InterruptedException{
-	int floorLength = 300;
-	int speedPerSec = 100;
 	int currentLength = 0;
 	int chkFloorCountTmp = 0;
 	System.out.println(Constants.STARTING_TRANSPORTATION);
@@ -129,7 +127,8 @@ public int runElevatorFloorCount() throws InterruptedException{
 		if(currentFloor == 1 && currWay.equals(currentWay.DOWN)){
 			currWay = currentWay.UP;
 		}
-		Thread.currentThread().sleep(moveDelay);
+		Thread.currentThread();
+		Thread.sleep(moveDelay);
 	}
 	if(isTerminate){
 		System.out.println(Constants.ABORTING_TRANSPORTATION);

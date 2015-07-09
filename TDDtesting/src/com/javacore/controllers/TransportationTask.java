@@ -5,14 +5,13 @@ import com.javacore.entities.Passenger;
 import com.javacore.interfaces.Container;
 import com.javacore.utils.PassengerConditions;
 import com.javacore.utils.currentWay;
-/** Transportation task class */
+
 public class TransportationTask extends Thread {
-private PassengerController passControl;
 private Thread myThread;
 private Passenger passenger;
 private volatile int currentFloor;
 private volatile Enum<currentWay> currWay;
-private int startFloor;
+private int startFloor = 2;
 private int endFloor;
 private volatile int getOutFloorFlag;
 private volatile int onboardFloorFlag;
@@ -21,17 +20,22 @@ private volatile boolean getOut;
 private volatile boolean enter;
 private volatile boolean isAborted;
 
-public TransportationTask(Passenger passenger, PassengerController passControl) {
+public TransportationTask(Passenger passenger) {
 	super();
-	this.passControl = passControl;
-	this.getOut = false;
-	this.passenger = passenger;
-	this.startFloor = passenger.getStartFloor();
-	this.endFloor = passenger.getEndFloor();
 	this.isAborted = false;
 	this.getOutFloorFlag = 0;
 	this.onboardFloorFlag = 0;
 	myThread = new Thread(this);
+}
+
+{
+	passenger = new Passenger();
+	container = new ArrivalStoryContainer(4);
+	endFloor = 10;
+	currentFloor = 2;
+	currWay = currentWay.UP;
+	getOut = true;
+	enter = true;
 }
 
 public Thread getMyThread() {
@@ -50,35 +54,6 @@ public void setPassenger(Passenger passenger) {
 	this.passenger = passenger;
 }
 
-@Override
-public void run() {
-	synchronized (this) { 
-           try {
-			wait();
-		} catch (InterruptedException e) {
-		} 
-    }
-	boolean flag = true;
-	while(flag){
-		checkIsEnterNotify();
-        checkIsGetOutNotify();
-		if(checkIsAbortedState()){
-			flag = false;
-		}
-		if(checkIsCompletedState()){
-			flag = false;
-		}
-		passControl.notifyPassengerController();
-		synchronized (this) { 
-		         try { 
-		            wait(); 
-		         } 
-		    	 catch (Exception e) { 
-		         } 
-		    }
-	}
-}
-
 private boolean checkIsAbortedState() {
 	if(isAborted) {
 		passenger.setTransportationState(PassengerConditions.ABORTED);
@@ -88,12 +63,12 @@ private boolean checkIsAbortedState() {
 	return false;
 }
 
-private boolean checkIsCompletedState() {
+public boolean checkIsCompletedState() {
 	if (container instanceof ArrivalStoryContainer) {
 		passenger.setTransportationState(PassengerConditions.COMPLETED);
-		return true;
 	}
-	return false;
+	boolean out;
+    return out = passenger.getTransportationState().equals(PassengerConditions.COMPLETED)?true:false;
 }
 
 private void checkIsEnterNotify() {
@@ -103,7 +78,7 @@ private void checkIsEnterNotify() {
 	}
 }
 
-private boolean checkIsGetOutNotify() {
+public boolean checkIsGetOutNotify() {
 	if(getOut && isReadyToGetOut()){
 		getOutFloorFlag = endFloor;
 		getOut = false;

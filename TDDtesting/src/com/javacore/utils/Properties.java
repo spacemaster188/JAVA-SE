@@ -1,6 +1,7 @@
 package com.javacore.utils;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -48,23 +49,28 @@ public static void setAnimationBoost(int animationBoost) {
 }
 
 public String getPropertiesFromFile(String config) throws IOException{
-	 BufferedReader reader = new BufferedReader(new FileReader(config));
-	 String line;
-	 while ((line = reader.readLine()) != null) {
-		 if (line.contains(Constants.FLOOR_NUMBER)) {
-			 floorNumber = getValueByKey(line);
+	 BufferedReader reader;
+	try {
+		reader = new BufferedReader(new FileReader(config));
+		String line;
+		while ((line = reader.readLine()) != null) {
+			 if (line.contains(Constants.FLOOR_NUMBER)) {
+				 floorNumber = getValueByKey(line);
+			 }
+			 if (line.contains(Constants.ELEVATOR_CAPACITY)) {
+				 elevatorCapacity = getValueByKey(line);
+			 }
+			 if (line.contains(Constants.PASSENGER_COUNT)) {
+				 passengerCount = getValueByKey(line);
+			 }
+			 if (line.contains(Constants.ANIMATION_BOOST)) {
+				 animationBoost = getValueByKey(line);
+			 }
 		 }
-		 if (line.contains(Constants.ELEVATOR_CAPACITY)) {
-			 elevatorCapacity = getValueByKey(line);
-		 }
-		 if (line.contains(Constants.PASSENGER_COUNT)) {
-			 passengerCount = getValueByKey(line);
-		 }
-		 if (line.contains(Constants.ANIMATION_BOOST)) {
-			 animationBoost = getValueByKey(line);
-		 }
-	 }
 	 reader.close();
+	} catch (FileNotFoundException e1) {
+		return  String.valueOf(0 + REGEX + 0 + REGEX + 0 + REGEX + 0 + REGEX);
+	}
 	 return  String.valueOf(floorNumber + REGEX + elevatorCapacity + REGEX + passengerCount + REGEX + animationBoost + REGEX);
 }
 

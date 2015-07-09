@@ -11,7 +11,7 @@ import com.javacore.interfaces.ElevatorObserver;
 import com.javacore.utils.Constants;
 import com.javacore.utils.GlobalLog;
 import com.javacore.utils.currentWay;
-
+/** Swing GUI Class */
 public class ElevatorGUI extends JFrame implements ElevatorObserver {
 	private static final long serialVersionUID = 1L;
 	private ElevatorController elevatorContr;

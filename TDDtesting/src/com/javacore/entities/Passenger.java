@@ -2,7 +2,6 @@ package com.javacore.entities;
 
 import com.javacore.utils.PassengerConditions;
 
-/** Passenger entity */
 public class Passenger {
 private int passengerID;
 public static int currentPassengersCount = 0;
@@ -10,32 +9,22 @@ private int startFloor;
 private int endFloor;
 private Enum<PassengerConditions> transportationState;
 
-public Passenger(int floorNumber) {
+public Passenger() {
 	super();
 	this.transportationState = PassengerConditions.NOT_STARTED;
 	this.passengerID = currentPassengersCount++;
-	this.startFloor = getRandomStartFloor(floorNumber);
-	this.endFloor = getRandomEndFloor(floorNumber);
 }
 
-public int getRandomStartFloor(int floorNumber) {
-	return (int)(Math.random()*floorNumber + 1);
+public boolean getRandomStartFloor(int floorNumber) {
+	return isCorrectRandomGeneration(floorNumber, (int)(Math.random()*floorNumber + 1));
 }
 
-public int getRandomEndFloor(int floorNumber) {
+public boolean getRandomEndFloor(int floorNumber) {
 	int outFloor = startFloor;
 	while(outFloor == startFloor){
 		outFloor = (int)(Math.random()*floorNumber + 1);
 	}
-	return outFloor;
-}
-
-public int getPassengerID() {
-	return passengerID;
-}
-
-public void setPassengerID(int passengerID) {
-	this.passengerID = passengerID;
+	return isCorrectRandomGeneration(floorNumber, outFloor);
 }
 
 public int getStartFloor() {
@@ -54,12 +43,27 @@ public void setEndFloor(int endFloor) {
 	this.endFloor = endFloor;
 }
 
+public boolean isCorrectRandomGeneration(int floorNumber, int generatedValue) {
+	if(generatedValue <= floorNumber && generatedValue >= 1){
+		return true;
+	}
+	return false;
+}
+
 public Enum<PassengerConditions> getTransportationState() {
 	return transportationState;
 }
 
 public void setTransportationState(Enum<PassengerConditions> transportationState) {
 	this.transportationState = transportationState;
+}
+
+public int getPassengerID() {
+	return passengerID;
+}
+
+public void setPassengerID(int passengerID) {
+	this.passengerID = passengerID;
 }
 
 }
