@@ -5,14 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.javacore.controllers.PassengerController;
-/** Check organization creation of passengers and containers in PassengerController class */
-public class runPassengerControllerTest1 {
+/** Checking final report by overall arrived passengers */
+public class runPassengerControllerTestAllPassengersArrived {
 
 	@Test
 	public void test() throws InterruptedException {
 		PassengerController test = new PassengerController();
-		int output = test.organizePassengers();
-		assertEquals(20, output);
+		boolean output = test.isAllPassengersArrived();
+		assertEquals(false, output);
 	}
 
 }

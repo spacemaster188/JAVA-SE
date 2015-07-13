@@ -1,5 +1,5 @@
 package com.javacore.containers;
-
+/** Container class for location passengers in elevator*/
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,31 +8,31 @@ import com.javacore.interfaces.Container;
 
 public class ElevatorContainer implements Container {
 private int elevatorCapacity;
-private List <TransportationTask> transportationTaskLst;
+private List<TransportationTask> transportationTaskLst;
 
-public ElevatorContainer(int elevatorCapacity) {
-	super();
-	this.elevatorCapacity = elevatorCapacity;
-	this.transportationTaskLst = new ArrayList<TransportationTask>();
+public ElevatorContainer(final int elevatorCapacity) {
+    super();
+    this.elevatorCapacity = elevatorCapacity;
+    this.transportationTaskLst = new ArrayList<TransportationTask>();
 }
 
 @Override
-public void addTransportationTask(TransportationTask transportationTask) {
-	transportationTaskLst.add(transportationTask);	
+public void addTransportationTask(final TransportationTask transportationTask) {
+    transportationTaskLst.add(transportationTask);
 }
 
 @Override
 public List<TransportationTask> getTransportationTaskLst() {
-	return transportationTaskLst;
+    return transportationTaskLst;
 }
 
 @Override
-public void removeTransportationTask(TransportationTask transportationTask) {
-	transportationTaskLst.remove(transportationTask);
+public void removeTransportationTask(final TransportationTask transportationTask) {
+    transportationTaskLst.remove(transportationTask);
 }
 
-public int getElevatorCapacity() {
-	return elevatorCapacity;
+public final int getElevatorCapacity() {
+    return elevatorCapacity;
 }
 
 }

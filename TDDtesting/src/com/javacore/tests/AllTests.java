@@ -5,15 +5,29 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ runCheckLoggingTest.class, runElevatorTest1.class,
-		runElevatorTest2.class, runElevatorTest3.class,
-		runPassengerControllerTest1.class, runPassengerControllerTest2.class,
-		runPassengerControllerTest3.class, runPassengerControllerTest4.class,
-		runPassengerTest1.class, runPassengerTest2.class,
-		runPassengerTest3.class, runPropertiesTest1.class,
-		runPropertiesTest2.class, runPropertiesTest3.class,
-		runTransportationTaskTest1.class, runTransportationTaskTest2.class,
-		runTransportationTaskTest3.class, runTransportationTaskTest4.class })
+@SuiteClasses({ runCheckLoggingTest.class,
+		runElevatorTestCorrectFloorCount.class,
+		runElevatorTestCorrectStandFloor.class,
+		runElevatorTestCorrectWay.class,
+		runPassengerControllerTestAllPassengersArrived.class,
+		runPassengerControllerTestArrivedPassengersVerify.class,
+		runPassengerControllerTestConditionsStoppingElevatorVerify.class,
+		runPassengerControllerTestCreationContainers2.class,
+		runPassengerControllerTestCreationContainersPassengers.class,
+		runPassengerControllerTestCreationContaners.class,
+		runPassengerControllerTestDispatcherContainersForEmpty.class,
+		runPassengerControllerTestElevatorContainerForEmpty.class,
+		runPassengerControllerTestElevatorVacancy.class,
+		runPassengerTestFloorGeneration.class,
+		runPassengerTestFloorGeneration2.class,
+		runPassengerTestPassengersIdGeneration.class,
+		runPropertiesTestReadProperties.class,
+		runPropertiesTestReadProperties2.class,
+		runPropertiesTestReadProperties3.class,
+		runTransportationTaskTestCompletedState.class,
+		runTransportationTaskTestIsReadyEnter.class,
+		runTransportationTaskTestIsReadyGetout.class,
+		runTransportationTaskTestPassengerStateChanging.class })
 public class AllTests {
 
 }

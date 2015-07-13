@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.javacore.controllers.TransportationTask;
 import com.javacore.entities.Passenger;
 /** Check IsCompletedState method of TransportationTask class */
-public class runTransportationTaskTest3 {
+public class runTransportationTaskTestCompletedState {
 
 	@Test
 	public void test() throws InterruptedException {

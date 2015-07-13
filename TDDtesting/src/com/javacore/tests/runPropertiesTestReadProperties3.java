@@ -7,13 +7,13 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.javacore.utils.Properties;
-/** Check incorrect incoming properties from config2.properties */
-public class runPropertiesTest2 {
+/** Check no file properties */
+public class runPropertiesTestReadProperties3 {
 
 	@Test
 	public void test() throws InterruptedException, IOException {
 		Properties test = new Properties();
-		String output = test.getPropertiesFromFile("resources/config2.properties");
-		assertEquals("6;0;0;0;", output);
+		String output = test.getPropertiesFromFile("noFile.properties");
+		assertEquals("0;0;0;0;", output);
 	}
 }

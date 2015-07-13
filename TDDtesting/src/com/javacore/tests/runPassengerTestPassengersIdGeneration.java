@@ -3,15 +3,16 @@ package com.javacore.tests;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
 import com.javacore.controllers.PassengerController;
-/** Check elevator's vacancy in PassengerController class */
-public class runPassengerControllerTest4 {
+/** Check passenger's ID generation */
+public class runPassengerTestPassengersIdGeneration {
 
 	@Test
 	public void test() throws InterruptedException {
 		PassengerController test = new PassengerController();
-		boolean output = test.isElevatorVacant();
-		assertEquals(false, output);
+		int output = test.getLastPassengerId();
+		assertEquals(2, output);
 	}
 
 }

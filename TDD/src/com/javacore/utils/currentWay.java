@@ -1,6 +1,6 @@
 package com.javacore.utils;
 /** Available directions for elevator moving */
-public enum currentWay {
+public enum CurrentWay {
     UP, DOWN
 }
 

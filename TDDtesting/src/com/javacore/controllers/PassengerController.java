@@ -8,6 +8,7 @@ import com.javacore.containers.DispatchStoryContainer;
 import com.javacore.containers.ElevatorContainer;
 import com.javacore.entities.Passenger;
 import com.javacore.utils.GlobalLog;
+import com.javacore.utils.LoggingConstants;
 import com.javacore.utils.PassengerConditions;
 import com.javacore.utils.currentWay;
 
@@ -172,6 +173,74 @@ public class PassengerController {
 			return false;
 		}
 		return true;
+	}
+	
+	/**  Verify conditions for elevator stopping  */
+	public boolean isConditionsStoppingElevatoraVerified() {
+		if(isAllPassengersArrived() && isAllDispatchStoryContainersEmpty() && isElevatorContainersEmpty() && isArrivedPassengersVerified()){
+			logger.info(LoggingConstants.PROCESS_VALIDATION_OK.getConstant());
+			return true;
+		}
+		else{
+			logger.info(LoggingConstants.PROCESS_VALIDATION_FAIL.getConstant());
+			return false;
+		}
+	}
+	
+	public boolean isAllPassengersArrived() {
+		int arrivedPassengersCount = 0;
+		for (ArrivalStoryContainer arrivalStoryContainer : arrivStorContLst) {
+			arrivedPassengersCount += arrivalStoryContainer.getTransportationTaskLst().size();
+		}
+		if(passengerCount == arrivedPassengersCount){
+			logger.info(LoggingConstants.ALL_PASSENGERS_ARRIVED.getConstant());
+			return true;
+		}
+		logger.info(LoggingConstants.ALL_PASSENGERS_NOT_ARRIVED.getConstant());
+		return false;
+	}
+	
+	public boolean isAllDispatchStoryContainersEmpty() {
+		int dispatchStorPassengersCount = 0;
+		for (DispatchStoryContainer containerElement : dispStorContLst) {
+			dispatchStorPassengersCount += containerElement.getTransportationTaskLst().size();
+		}
+		if(dispatchStorPassengersCount == 0){
+			logger.info(LoggingConstants.DISPATCH_CONTAINERS_EMPTY.getConstant());
+			return true;
+		}
+		logger.info(LoggingConstants.DISPATCH_CONTAINERS_NOT_EMPTY.getConstant());
+		return false;
+	}
+	
+	public boolean isElevatorContainersEmpty() {
+		if(elevatorCont.getTransportationTaskLst().size() == 0){
+			logger.info(LoggingConstants.ELEVATOR_CONTAINER_EMPTY.getConstant());
+			return true;
+		}
+		logger.info(LoggingConstants.ELEVATOR_CONTAINER_NOT_EMPTY.getConstant());
+		return false;
+	}
+	
+	public boolean isArrivedPassengersVerified() {
+		ArrivalStoryContainer ar = new ArrivalStoryContainer(4);
+		ar.addTransportationTask(new TransportationTask(new Passenger()));
+		arrivStorContLst.add(ar);
+		boolean verified = true;
+		for (ArrivalStoryContainer containerElement : arrivStorContLst) {
+			List <TransportationTask> transpTaskLst = containerElement.getTransportationTaskLst();
+			for (TransportationTask tt : transpTaskLst) {
+				if(!tt.getPassenger().getTransportationState().equals(PassengerConditions.COMPLETED) || !(tt.getEndFloor() == containerElement.getFloor())){
+					verified = false;
+				}
+			}
+		}
+		if(verified){
+			logger.info(LoggingConstants.ARRIVED_PASSENGERS_PASS.getConstant());
+			return true;
+		}
+		logger.info(LoggingConstants.ARRIVED_PASSENGERS_FAIL.getConstant());
+		return false;
 	}
 	
 }

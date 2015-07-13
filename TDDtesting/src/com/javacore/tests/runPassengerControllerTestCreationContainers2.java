@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.javacore.containers.DispatchStoryContainer;
 import com.javacore.controllers.PassengerController;
 /** Check creation of containers in PassengerController class */
-public class runPassengerControllerTest3 {
+public class runPassengerControllerTestCreationContainers2 {
 
 	@Test
 	public void test() throws InterruptedException {

@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import com.javacore.controllers.TransportationTask;
 import com.javacore.entities.Passenger;
-/** Check getOutReady method of TransportationTask class */
-public class runTransportationTaskTest1 {
+/** Check isReadyToEnter method of TransportationTask class */
+public class runTransportationTaskTestIsReadyEnter {
 
 	@Test
 	public void test() throws InterruptedException {
 		TransportationTask test = new TransportationTask(new Passenger());
-		boolean output = test.checkIsGetOutNotify();
-		assertEquals(false, output);
+		boolean output = test.isReadyToEnter();
+		assertEquals(true, output);
 	}
 
 }

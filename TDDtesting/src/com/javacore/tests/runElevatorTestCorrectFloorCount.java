@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.javacore.controllers.ElevatorController;
-/** Check floor_count by test floor */
-public class runElevatorTest3 {
+/** Check floor count by test floor */
+public class runElevatorTestCorrectFloorCount {
 
 	@Test
 	public void test() throws InterruptedException {

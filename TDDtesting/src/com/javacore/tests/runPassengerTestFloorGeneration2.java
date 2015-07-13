@@ -5,13 +5,13 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import com.javacore.entities.Passenger;
-/** Check passenger's random start floor generation */
-public class runPassengerTest1 {
+/** Check passenger's random end floor generation */
+public class runPassengerTestFloorGeneration2 {
 
 	@Test
 	public void test() throws InterruptedException {
 		Passenger test = new Passenger();
-		boolean output = test.getRandomStartFloor(8);
+		boolean output = test.getRandomEndFloor(10);
 		assertEquals(true, output);
 	}
 
