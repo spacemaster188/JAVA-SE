@@ -53,11 +53,10 @@ public final void setPassenger(final Passenger passenger) {
 @Override
 public final void run() {
     synchronized (this) {
-           try {
-              wait();
-           } catch (InterruptedException e) {
-             }
-    }
+        try {
+            wait();
+            } catch (InterruptedException e) { }
+        }
     boolean flag = true;
     while (flag) {
         checkIsEnterNotify();
@@ -81,10 +80,13 @@ public final void run() {
 private boolean checkIsAbortedState() {
     if (isAborted) {
         passenger.setTransportationState(PassengerConditions.ABORTED);
-        //System.out.println("Passenger's state was setted by Thread as ABORTED!!!");
         return true;
     }
    return false;
+}
+
+public boolean isAborted() {
+	return isAborted;
 }
 
 private boolean checkIsCompletedState() {

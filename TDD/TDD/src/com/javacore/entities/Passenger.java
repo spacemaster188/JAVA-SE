@@ -11,9 +11,9 @@ private int endFloor;
 private Enum<PassengerConditions> transportationState;
 
 public Passenger(final int floorNumber) {
-    super();
+	currentPassengersCount++;
     this.transportationState = PassengerConditions.NOT_STARTED;
-    this.passengerID = currentPassengersCount++;
+    this.passengerID = currentPassengersCount;
     this.startFloor = getRandomStartFloor(floorNumber);
     this.endFloor = getRandomEndFloor(floorNumber);
 }

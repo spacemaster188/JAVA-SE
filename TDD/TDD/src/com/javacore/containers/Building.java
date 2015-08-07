@@ -3,15 +3,17 @@ package com.javacore.containers;
 import java.io.IOException;
 
 import com.javacore.controllers.ElevatorController;
-import com.javacore.controllers.PassengerController;
 
 public class Building {
+	private ElevatorController elevatorController;
 
-    public Building() throws IOException, InterruptedException {
-        super();
-        PassengerController passControl = new PassengerController();
-        passControl.organizePassengers();
-        new ElevatorController(passControl).start();
-        }
+	public Building() throws IOException, InterruptedException {
+		this.elevatorController = new ElevatorController();
+		elevatorController.launch();
+	}
+
+	public ElevatorController getElevatorController() {
+		return elevatorController;
+	}
 
 }

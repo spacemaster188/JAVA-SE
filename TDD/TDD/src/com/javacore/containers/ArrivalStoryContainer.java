@@ -11,7 +11,6 @@ public class ArrivalStoryContainer implements Container {
     private List<TransportationTask> transpTaskLst;
 
     public ArrivalStoryContainer(final int floor) {
-        super();
         this.floor = floor;
         transpTaskLst = new ArrayList<TransportationTask>();
     }

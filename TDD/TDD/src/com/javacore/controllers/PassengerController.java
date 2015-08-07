@@ -17,6 +17,7 @@ import com.javacore.utils.Properties;
 import com.javacore.utils.CurrentWay;
 /** Service class for control containers and passengers */
 public class PassengerController {
+	private Properties properties;
     private volatile boolean isWaiting = false;
     private int floorNumber;
     private int passengerCount;
@@ -26,18 +27,16 @@ public class PassengerController {
     static final Logger logger = Logger.getLogger("ElevatorController.class");
 
     public PassengerController() throws IOException {
-        super();
-        new Properties();
-        this.floorNumber = Properties.getFloorNumber();
-        this.passengerCount = Properties.getPassengerCount();
+        this.properties =  new Properties();
+        this.floorNumber = properties.getFloorNumber();
+        this.passengerCount = properties.getPassengerCount();
         this.dispStorContLst = new ArrayList<DispatchStoryContainer>();
         this.arrivStorContLst = new ArrayList<ArrivalStoryContainer>();
-        this.elevatorCont = new ElevatorContainer(Properties.getElevatorCapacity());
+        this.elevatorCont = new ElevatorContainer(properties.getElevatorCapacity());
         }
     /** Build DispatchStoryContainer, ArrivalStoryContainer, TransportatinTasks lists */
     public final void organizePassengers() {
-        int tmpFloorNumber = Properties.getFloorNumber();
-        for (int i = 1; i <= tmpFloorNumber; i++) {
+        for (int i = 1; i <= floorNumber; i++) {
             dispStorContLst.add(new DispatchStoryContainer(i));
             arrivStorContLst.add(new ArrivalStoryContainer(i));
             }
@@ -56,10 +55,6 @@ public class PassengerController {
 
     public final ElevatorContainer getElevatorCont() {
         return elevatorCont;
-        }
-
-    public final List<DispatchStoryContainer> getDispStorCont() {
-        return dispStorContLst;
         }
 
     public final DispatchStoryContainer getDispatchStoryContainerByFloor(final int floor) {
@@ -259,5 +254,29 @@ public class PassengerController {
             }
         return true;
         }
+    
+	public int getPassengerCount() {
+		return passengerCount;
+	}
+	
+	public List<DispatchStoryContainer> getDispStorContLst() {
+		return dispStorContLst;
+	}
+	
+	public void setDispStorContLst(List<DispatchStoryContainer> dispStorContLst) {
+		this.dispStorContLst = dispStorContLst;
+	}
+	
+	public List<ArrivalStoryContainer> getArrivStorContLst() {
+		return arrivStorContLst;
+	}
+	
+	public void setArrivStorContLst(List<ArrivalStoryContainer> arrivStorContLst) {
+		this.arrivStorContLst = arrivStorContLst;
+	}
+	
+	public Properties getProperties() {
+		return properties;
+	}
 
 }

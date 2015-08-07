@@ -1,70 +1,66 @@
 package com.javacore.utils;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 /** Read configuration variables from file */
 public class Properties {
-private static int floorNumber;
-private static int elevatorCapacity;
-private static int passengerCount;
-private static int animationBoost;
+private String configFile;
+private int floorNumber;
+private int elevatorCapacity;
+private int passengerCount;
+private int animationBoost;
 
 public Properties() throws IOException {
-    super();
+	this.configFile = Constants.CONFIG;
     getPropertiesFromFile();
 }
 
-public static int getFloorNumber() {
-    return floorNumber;
+public int getFloorNumber() {
+	return floorNumber;
 }
 
-public static void setFloorNumber(final int floorNumber) {
-    Properties.floorNumber = floorNumber;
+
+public int getElevatorCapacity() {
+	return elevatorCapacity;
 }
 
-public static int getElevatorCapacity() {
-    return elevatorCapacity;
+
+public int getPassengerCount() {
+	return passengerCount;
 }
 
-public static void setElevatorCapacity(final int elevatorCapacity) {
-    Properties.elevatorCapacity = elevatorCapacity;
+
+public int getAnimationBoost() {
+	return animationBoost;
 }
 
-public static int getPassengerCount() {
-    return passengerCount;
-}
-
-public static void setPassengerCount(final int passengerCount) {
-    Properties.passengerCount = passengerCount;
-}
-
-public static int getAnimationBoost() {
-    return animationBoost;
-}
-
-public static void setAnimationBoost(final int animationBoost) {
-    Properties.animationBoost = animationBoost;
-}
-
-private void getPropertiesFromFile() throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(Constants.CONFIG));
-    String line;
-    while ((line = reader.readLine()) != null) {
-        if (line.contains(Constants.FLOOR_NUMBER)) {
-            floorNumber = getValueByKey(line);
-            }
-        if (line.contains(Constants.ELEVATOR_CAPACITY)) {
-            elevatorCapacity = getValueByKey(line);
-            }
-        if (line.contains(Constants.PASSENGER_COUNT)) {
-            passengerCount = getValueByKey(line);
-            }
-        if (line.contains(Constants.ANIMATION_BOOST)) {
-            animationBoost = getValueByKey(line);
-            }
-        }
-    reader.close();
+public void getPropertiesFromFile() throws IOException {
+	try {
+	    BufferedReader reader = new BufferedReader(new FileReader(configFile));
+	    String line;
+	    while ((line = reader.readLine()) != null) {
+	        if (line.contains(Constants.FLOOR_NUMBER)) {
+	            floorNumber = getValueByKey(line);
+	            }
+	        if (line.contains(Constants.ELEVATOR_CAPACITY)) {
+	            elevatorCapacity = getValueByKey(line);
+	            }
+	        if (line.contains(Constants.PASSENGER_COUNT)) {
+	            passengerCount = getValueByKey(line);
+	            }
+	        if (line.contains(Constants.ANIMATION_BOOST)) {
+	            animationBoost = getValueByKey(line);
+	            }
+	        }
+	    reader.close();
+	} catch (FileNotFoundException ex) {
+		floorNumber = 0;
+		elevatorCapacity = 0;
+		passengerCount = 0;
+		animationBoost = 0;
+	}
 }
 
 private int getValueByKey(final String lineStr) {
@@ -75,6 +71,17 @@ private int getValueByKey(final String lineStr) {
             return 0;
             }
     return Integer.parseInt(tmpMas[1].trim());
+}
+
+public void setConfigFile(String configFile) {
+	this.configFile = configFile;
+}
+
+@Override
+public String toString() {
+	return floorNumber + ";"
+			+ elevatorCapacity + ";" + passengerCount
+			+ ";" + animationBoost;
 }
 
 }
