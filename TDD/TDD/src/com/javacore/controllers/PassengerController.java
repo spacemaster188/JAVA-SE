@@ -177,7 +177,7 @@ public class PassengerController {
             }
         }
 
-    private void proceedAnotherThread(final TransportationTask tt) {
+    public void proceedAnotherThread(TransportationTask tt) {
         isWaiting = true;
         tt.notifyTransportationTask();
         while (isWaiting) {

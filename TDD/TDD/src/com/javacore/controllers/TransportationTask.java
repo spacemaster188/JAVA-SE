@@ -77,7 +77,7 @@ public final void run() {
     }
 }
 
-private boolean checkIsAbortedState() {
+public boolean checkIsAbortedState() {
     if (isAborted) {
         passenger.setTransportationState(PassengerConditions.ABORTED);
         return true;
@@ -97,14 +97,16 @@ private boolean checkIsCompletedState() {
     return false;
 }
 
-private void checkIsEnterNotify() {
+public boolean checkIsEnterNotify() {
     if (enter && isReadyToEnter()) {
         onboardFloorFlag = startFloor;
         enter = false;
+        return true;
     }
+    return false;
 }
 
-private boolean checkIsGetOutNotify() {
+public boolean checkIsGetOutNotify() {
     if (getOut && isReadyToGetOut()) {
         getOutFloorFlag = endFloor;
         getOut = false;
