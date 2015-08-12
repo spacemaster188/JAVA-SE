@@ -1,12 +1,13 @@
-package com.javacore.utils;
+package com.javacore.test.utils;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-public class GlobalLogTest1 {
+import com.javacore.utils.GlobalLog;
 
+public class GlobalLogTest {
 	@Test
 	public void addTwoServiceMessagesForSwingGuiWindowShow() {
 		final String FIRST_MESSAGE = "xx";
@@ -21,5 +22,4 @@ public class GlobalLogTest1 {
 				GlobalLog.getLog(), equalTo(MESSAGES_SAVED_IN_MEMORY));
 
 	}
-
 }

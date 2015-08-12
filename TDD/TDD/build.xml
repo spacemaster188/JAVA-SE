@@ -209,6 +209,14 @@
             <classpath refid="TDD.classpath"/>
         </junit>
     </target>
+    <target name="TransportationTaskTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.controllers.TransportationTaskTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
     <target name="TransportationTaskTest1.createTransportationTaskAndCheckHisContainerChanging">
         <mkdir dir="${junit.output.dir}"/>
         <junit fork="yes" printsummary="withOutAndErr">
@@ -246,6 +254,70 @@
         <junit fork="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <test name="com.javacore.controllers.TransportationTaskTest4" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="ElevatorControllerTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.controllers.ElevatorControllerTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="BuildingTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.containers.BuildingTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="PassengerControllerTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.controllers.PassengerControllerTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="PassengerTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.entities.PassengerTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="PassengerTest2.createNewPassengerAndCheckGeneratedId">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.entities.PassengerTest2" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="GlobalLogTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.utils.GlobalLogTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="PropertiesTest">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.utils.PropertiesTest" todir="${junit.output.dir}"/>
+            <classpath refid="TDD.classpath"/>
+        </junit>
+    </target>
+    <target name="AllTests (1)">
+        <mkdir dir="${junit.output.dir}"/>
+        <junit fork="yes" printsummary="withOutAndErr">
+            <formatter type="xml"/>
+            <test name="com.javacore.test.AllTests" todir="${junit.output.dir}"/>
             <classpath refid="TDD.classpath"/>
         </junit>
     </target>

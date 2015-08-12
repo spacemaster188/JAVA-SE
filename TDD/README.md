@@ -1,6 +1,6 @@
 Elevator
 
-TransportationTaskTest2, TransportationTaskTest3, TransportationTaskTest4 is a Mock tests classes
+TransportationTaskTest contains a Mock tests classes
 Other tests classes is a JUnit test classes
 
 We have a building of several floors, with Elevator
