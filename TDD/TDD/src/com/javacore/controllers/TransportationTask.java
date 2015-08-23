@@ -116,8 +116,8 @@ public boolean checkIsGetOutNotify() {
 }
 
 public final boolean isReadyToEnter() {
-    if (endFloor > currentFloor && currWay.equals(CurrentWay.UP)
-        || endFloor < currentFloor && currWay.equals(CurrentWay.DOWN)) {
+    if (endFloor > currentFloor && currWay == CurrentWay.UP
+        || endFloor < currentFloor && currWay == CurrentWay.DOWN) {
         return true;
     }
     return false;

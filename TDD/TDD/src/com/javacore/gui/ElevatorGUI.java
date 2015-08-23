@@ -86,7 +86,7 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
                 }
             });
         label5.setText(String.valueOf(currFloor));
-        if (currWay.equals(CurrentWay.UP)) {
+        if (currWay == CurrentWay.UP) {
             label6.setText(Constants.UP);
             } else {
                 label6.setText(Constants.DOWN);
@@ -157,7 +157,7 @@ public class ElevatorGUI extends JFrame implements ElevatorObserver {
             }
         label5.setText(String.valueOf(currFloor));
         label5.paintImmediately(label5.getVisibleRect());
-        if (currWay.equals(CurrentWay.UP)) {
+        if (currWay == CurrentWay.UP) {
             label6.setText(Constants.UP);
             label6.paintImmediately(label6.getVisibleRect());
             } else {

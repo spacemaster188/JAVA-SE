@@ -30,7 +30,7 @@ public class ElevatorController implements ElevatorSubject {
 	private final int speedPerSec = 100;
 	private int currentLength = 0;
 	private boolean elevatorStartFlag = false;
-	static final Logger logger = Logger.getLogger("ElevatorController.class");
+	private static final Logger logger = Logger.getLogger("ElevatorController.class");
 
 	public ElevatorController() throws InterruptedException, IOException {
 		this.passengersController = new PassengerController();
@@ -86,7 +86,7 @@ public class ElevatorController implements ElevatorSubject {
 		}
 		currentLength += speedPerSec;
 		if (currentLength == floorLength) {
-			if (currWay.equals(CurrentWay.UP)) {
+			if (currWay == CurrentWay.UP) {
 				currentFloor++;
 				coveredFloorNumber++;
 				currentLength = 0;
@@ -98,12 +98,12 @@ public class ElevatorController implements ElevatorSubject {
 			notifyObservers();
 		}
 		/** Check for upper floor */
-		if (currentFloor == floorNumber && currWay.equals(CurrentWay.UP)) {
+		if (currentFloor == floorNumber && currWay == CurrentWay.UP) {
 			currWay = CurrentWay.DOWN;
 			notifyObservers();
 		}
 		/** Check for lower floor */
-		if (currentFloor == 1 && currWay.equals(CurrentWay.DOWN)) {
+		if (currentFloor == 1 && currWay == CurrentWay.DOWN) {
 			currWay = CurrentWay.UP;
 			notifyObservers();
 		}
@@ -127,7 +127,7 @@ public class ElevatorController implements ElevatorSubject {
 	}
 
 	private int getDestinationFloor() {
-		if (currWay.equals(CurrentWay.UP)) {
+		if (currWay == CurrentWay.UP) {
 			if (currentFloor == floorNumber) {
 				return currentFloor - 1;
 			}
