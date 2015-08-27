@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 /** Read configuration variables from file */
 public class Properties {
 private String configFile;
@@ -11,10 +12,22 @@ private int floorNumber;
 private int elevatorCapacity;
 private int passengerCount;
 private int animationBoost;
+private static Properties properties = null;
 
 public Properties() throws IOException {
 	this.configFile = Constants.CONFIG;
     getPropertiesFromFile();
+}
+/** Singleton for building properties */
+public static Properties getProperties() {
+	if (properties == null) {
+		try {
+			properties = new Properties();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	return properties;
 }
 
 public int getFloorNumber() {

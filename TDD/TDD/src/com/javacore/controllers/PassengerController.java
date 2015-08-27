@@ -27,7 +27,7 @@ public class PassengerController {
     static final Logger logger = Logger.getLogger("ElevatorController.class");
 
     public PassengerController() throws IOException {
-        this.properties =  new Properties();
+        this.properties =  Properties.getProperties();
         this.floorNumber = properties.getFloorNumber();
         this.passengerCount = properties.getPassengerCount();
         this.dispStorContLst = new ArrayList<DispatchStoryContainer>();

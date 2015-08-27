@@ -3,7 +3,7 @@ package com.javacore.containers;
 import java.io.IOException;
 
 import com.javacore.controllers.ElevatorController;
-/** Container class for whole building */
+/** Container class for main building */
 public class Building {
 	private ElevatorController elevatorController;
 

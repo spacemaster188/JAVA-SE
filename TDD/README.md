@@ -1,5 +1,6 @@
 Elevator
 
+Using Singleton, Observer patterns.
 TransportationTaskTest contains a Mock tests classes
 Other tests classes is a JUnit test classes
 
